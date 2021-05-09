@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>recommender package &#8212; Credit Card Master 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="recommender-package">
+<h1>recommender package<a class="headerlink" href="#recommender-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="recommender.migrations.html">recommender.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="recommender.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recommender.migrations.html#module-recommender.migrations.0001_initial">recommender.migrations.0001_initial module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recommender.migrations.html#module-recommender.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="recommender-admin-module">
+<h2>recommender.admin module<a class="headerlink" href="#recommender-admin-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-recommender.apps">
+<span id="recommender-apps-module"></span><h2>recommender.apps module<a class="headerlink" href="#module-recommender.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="recommender.apps.RecommenderConfig">
+<em class="property">class </em><code class="sig-prename descclassname">recommender.apps.</code><code class="sig-name descname">RecommenderConfig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">app_name</span></em>, <em class="sig-param"><span class="n">app_module</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/recommender/apps.html#RecommenderConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#recommender.apps.RecommenderConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="py attribute">
+<dt id="recommender.apps.RecommenderConfig.name">
+<code class="sig-name descname">name</code><em class="property"> = 'recommender'</em><a class="headerlink" href="#recommender.apps.RecommenderConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="recommender-forms-module">
+<h2>recommender.forms module<a class="headerlink" href="#recommender-forms-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-recommender.location">
+<span id="recommender-location-module"></span><h2>recommender.location module<a class="headerlink" href="#module-recommender.location" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="recommender.location.get_browse_response">
+<code class="sig-prename descclassname">recommender.location.</code><code class="sig-name descname">get_browse_response</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">browse_request</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/recommender/location.html#get_browse_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#recommender.location.get_browse_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the distances for all nearby banks</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="recommender.location.get_geo_code">
+<code class="sig-prename descclassname">recommender.location.</code><code class="sig-name descname">get_geo_code</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">area</span></em>, <em class="sig-param"><span class="n">city</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/recommender/location.html#get_geo_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#recommender.location.get_geo_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the geocode for the area given by user input.
+Geocode is the latitude and longitude from the 
+text input by user.
+Uses the geocoding api by HERE technologies.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="recommender.location.location_scoring_banks">
+<code class="sig-prename descclassname">recommender.location.</code><code class="sig-name descname">location_scoring_banks</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">card_preference_banks</span></em>, <em class="sig-param"><span class="n">geo_results</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/recommender/location.html#location_scoring_banks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#recommender.location.location_scoring_banks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign location scores to banks that scored high in preference</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="recommender.location.location_scoring_cards">
+<code class="sig-prename descclassname">recommender.location.</code><code class="sig-name descname">location_scoring_cards</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_location</span></em>, <em class="sig-param"><span class="n">card_preference_banks</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/recommender/location.html#location_scoring_cards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#recommender.location.location_scoring_cards" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="recommender.location.make_browse_request">
+<code class="sig-prename descclassname">recommender.location.</code><code class="sig-name descname">make_browse_request</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">latitude</span></em>, <em class="sig-param"><span class="n">longitude</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/recommender/location.html#make_browse_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#recommender.location.make_browse_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the API request to search for nearby banks based on latitude and longitude</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="recommender.location.process_bank_names">
+<code class="sig-prename descclassname">recommender.location.</code><code class="sig-name descname">process_bank_names</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bank_names</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/recommender/location.html#process_bank_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#recommender.location.process_bank_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="recommender-models-module">
+<h2>recommender.models module<a class="headerlink" href="#recommender-models-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="recommender-recommender-module">
+<h2>recommender.recommender module<a class="headerlink" href="#recommender-recommender-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="recommender-resources-module">
+<h2>recommender.resources module<a class="headerlink" href="#recommender-resources-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-recommender.tests">
+<span id="recommender-tests-module"></span><h2>recommender.tests module<a class="headerlink" href="#module-recommender.tests" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="recommender-testtest-module">
+<h2>recommender.testtest module<a class="headerlink" href="#recommender-testtest-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="recommender-urls-module">
+<h2>recommender.urls module<a class="headerlink" href="#recommender-urls-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="recommender-views-module">
+<h2>recommender.views module<a class="headerlink" href="#recommender-views-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-recommender">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-recommender" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Credit Card Master</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Shams.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/recommender.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

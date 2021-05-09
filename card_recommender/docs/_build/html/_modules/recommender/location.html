@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>recommender.location &#8212; Credit Card Master 1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for recommender.location</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># API website : https://www.here.com/en</span>
+
+<span class="n">app_id</span> <span class="o">=</span> <span class="s2">&quot;EPimKPfenNGqsgGCr01O&quot;</span>
+<span class="n">app_code</span>  <span class="o">=</span> <span class="s2">&quot;n6V78llT2352UUagDt295g&quot;</span>
+
+<div class="viewcode-block" id="get_geo_code"><a class="viewcode-back" href="../../recommender.html#recommender.location.get_geo_code">[docs]</a><span class="k">def</span> <span class="nf">get_geo_code</span><span class="p">(</span><span class="n">area</span><span class="p">,</span><span class="n">city</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Gets the geocode for the area given by user input.</span>
+<span class="sd">        Geocode is the latitude and longitude from the </span>
+<span class="sd">        text input by user.</span>
+<span class="sd">        Uses the geocoding api by HERE technologies. &quot;&quot;&quot;</span>
+    <span class="n">searchtext</span><span class="o">=</span><span class="n">area</span> <span class="o">+</span> <span class="s2">&quot;+&quot;</span><span class="o">+</span><span class="n">city</span>
+    <span class="n">geo_code</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://geocoder.api.here.com/6.2/geocode.json&quot;</span><span class="p">,</span>
+                             <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;app_id&quot;</span><span class="p">:</span><span class="n">app_id</span><span class="p">,</span>
+                                     <span class="s2">&quot;app_code&quot;</span><span class="p">:</span><span class="n">app_code</span><span class="p">,</span>
+                                     <span class="s2">&quot;searchtext&quot;</span><span class="p">:</span><span class="n">searchtext</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">geo_code</span><span class="o">.</span><span class="n">status_code</span><span class="o">==</span><span class="mi">200</span><span class="p">:</span>
+        <span class="n">latitude</span><span class="o">=</span> <span class="n">geo_code</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;Response&#39;</span><span class="p">][</span><span class="s1">&#39;View&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Result&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Location&#39;</span><span class="p">][</span><span class="s1">&#39;NavigationPosition&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Latitude&#39;</span><span class="p">]</span>
+        <span class="n">longitude</span> <span class="o">=</span> <span class="n">geo_code</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;Response&#39;</span><span class="p">][</span><span class="s1">&#39;View&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Result&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Location&#39;</span><span class="p">][</span><span class="s1">&#39;NavigationPosition&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Longitude&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">latitude</span><span class="p">,</span><span class="n">longitude</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Failed to enable location features&quot;</span></div>
+    
+    
+    
+<div class="viewcode-block" id="make_browse_request"><a class="viewcode-back" href="../../recommender.html#recommender.location.make_browse_request">[docs]</a><span class="k">def</span> <span class="nf">make_browse_request</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span><span class="n">longitude</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make the API request to search for nearby banks based on latitude and longitude&quot;&quot;&quot;</span>
+    <span class="n">browse_request</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;https://places.cit.api.here.com/places/v1/browse?app_id=</span><span class="si">{</span><span class="n">app_id</span><span class="si">}</span><span class="s2">&amp;app_code=</span><span class="si">{</span><span class="n">app_code</span><span class="si">}</span><span class="s2">&amp;in=</span><span class="si">{</span><span class="n">latitude</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">longitude</span><span class="si">}</span><span class="s2">;r=5000&amp;cat=atm-bank-exchange&amp;pretty&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">browse_request</span></div>
+
+<div class="viewcode-block" id="get_browse_response"><a class="viewcode-back" href="../../recommender.html#recommender.location.get_browse_response">[docs]</a><span class="k">def</span> <span class="nf">get_browse_response</span><span class="p">(</span><span class="n">browse_request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Get the distances for all nearby banks&quot;&quot;&quot;</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">browse_request</span><span class="p">)</span>
+    <span class="n">bank_names_distance</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="o">==</span><span class="mi">200</span><span class="p">:</span>
+        <span class="n">json_result</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">json_result</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="s2">&quot;items&quot;</span><span class="p">]:</span>
+            <span class="n">bank_name</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">distance</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span>
+            <span class="n">bank_names_distance</span><span class="p">[</span><span class="n">bank_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span>
+    <span class="k">return</span> <span class="n">bank_names_distance</span></div>
+
+<div class="viewcode-block" id="process_bank_names"><a class="viewcode-back" href="../../recommender.html#recommender.location.process_bank_names">[docs]</a><span class="k">def</span> <span class="nf">process_bank_names</span><span class="p">(</span><span class="n">bank_names</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Limited&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">bank_names</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="location_scoring_banks"><a class="viewcode-back" href="../../recommender.html#recommender.location.location_scoring_banks">[docs]</a><span class="k">def</span> <span class="nf">location_scoring_banks</span><span class="p">(</span><span class="n">card_preference_banks</span><span class="p">,</span> <span class="n">geo_results</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Assign location scores to banks that scored high in preference&quot;&quot;&quot;</span>
+    <span class="n">card_bank_score</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># Traverse through each of the banks that ranked high in the preferences</span>
+    <span class="k">for</span> <span class="n">card_bank</span> <span class="ow">in</span> <span class="n">card_preference_banks</span><span class="p">:</span>
+        <span class="n">current_bank_scores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># if any of those banks area nearby, then get a location score for those banks</span>
+        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">geo_results</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">result</span>
+            <span class="k">if</span> <span class="n">card_bank</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">current_bank_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geo_results</span><span class="p">[</span><span class="n">result</span><span class="p">])</span>
+        <span class="c1"># each bank may have multiple locations, so the location score for a bank is the minimum of all the location scores.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">current_bank_score_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">current_bank_scores</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">current_bank_score_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="c1"># assign the location score to each of the banks from the card preference</span>
+        <span class="n">card_bank_score</span><span class="p">[</span><span class="n">card_bank</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_bank_score_avg</span>
+        
+    <span class="k">return</span> <span class="n">card_bank_score</span></div>
+
+
+
+
+<div class="viewcode-block" id="location_scoring_cards"><a class="viewcode-back" href="../../recommender.html#recommender.location.location_scoring_cards">[docs]</a><span class="k">def</span> <span class="nf">location_scoring_cards</span><span class="p">(</span><span class="n">user_location</span><span class="p">,</span><span class="n">card_preference_banks</span><span class="p">):</span>
+    <span class="c1"># clean up data </span>
+    <span class="n">card_preference_banks</span> <span class="o">=</span> <span class="n">process_bank_names</span><span class="p">(</span><span class="n">card_preference_banks</span><span class="p">)</span>
+
+    <span class="c1"># First find the geocoes from user input</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">user_location</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span>
+    <span class="n">city</span> <span class="o">=</span> <span class="n">user_location</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span>
+    <span class="n">geo_codes</span> <span class="o">=</span> <span class="n">get_geo_code</span><span class="p">(</span><span class="n">area</span><span class="p">,</span><span class="n">city</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">geo_codes</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)):</span>
+    <span class="c1"># if successfully geocodes are found, then find nearby banks</span>
+        <span class="n">browse_request</span>  <span class="o">=</span> <span class="n">make_browse_request</span><span class="p">(</span><span class="n">latitude</span><span class="o">=</span><span class="n">geo_codes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">longitude</span><span class="o">=</span><span class="n">geo_codes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># location score the banks which scored high on card preference based on the distance</span>
+        <span class="n">geo_results</span> <span class="o">=</span> <span class="n">get_browse_response</span><span class="p">(</span><span class="n">browse_request</span><span class="p">)</span>
+        <span class="n">bank_location_scores</span> <span class="o">=</span> <span class="n">location_scoring_banks</span><span class="p">(</span><span class="n">card_preference_banks</span><span class="p">,</span><span class="n">geo_results</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">bank_location_scores</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Fail&quot;</span></div>
+    
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Credit Card Master</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Shams.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
