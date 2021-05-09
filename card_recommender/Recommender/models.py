@@ -76,7 +76,10 @@ class Card(models.Model):
         #return "/products/{pk}/".format(pk=self.pk)
         return reverse("detail", kwargs={"pk": self.pk})
     
-
+class Recommendation(models.Model):
+    card = models.ForeignKey(Card,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    recommendation_score = models.FloatField()
     
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
