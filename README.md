@@ -2,19 +2,6 @@
 
 [TOC]
 
-Group members:
-
-Sakib Monir      - 1530964042
-
-Abdullah riyadh      -1711646642
-
-Sumaiya khan     - 1711879642
-
-Shams Saniat      - 1821848642
-
-
-
-
 
 # 1. Introduction
 
